@@ -49,6 +49,12 @@ async function run() {
       } = req.query;
 
       const query = {};
+      if (brand) query.brand = brand;
+      if (category) query.category = category;
+      if (searchTxt) query.name = {$regex: searchTxt, $options: 'i'};
+      if (minPrice && !maxPrice) query.price = {$gte: parseInt(minPrice)};
+      if (maxPrice && !minPrice) query.price = {$lte: parseInt(maxPrice)};
+      if (maxPrice && minPrice) query.price = {$gte: parseInt(minPrice), $lte: parseInt(maxPrice)};
 
       const result = await productsCollection.find(query).skip(page * size).limit(size).toArray();
       res.send(result);
