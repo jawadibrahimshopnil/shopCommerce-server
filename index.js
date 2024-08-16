@@ -40,6 +40,14 @@ async function run() {
     app.get("/products", async(req, res)=>{
       const page = parseInt(req.query?.page) || 0;
       const size = parseInt(req.query?.size) || 9;
+      const { 
+        brand, 
+        category, 
+        maxPrice, 
+        minPrice, 
+        searchTxt
+      } = req.query;
+
       const query = {};
 
       const result = await productsCollection.find(query).skip(page * size).limit(size).toArray();
