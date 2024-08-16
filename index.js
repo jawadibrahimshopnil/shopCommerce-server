@@ -26,7 +26,12 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     // await client.connect();
 
+    // Database decl
+    const shopDB = client.db("shopCommerce");
+    const productsCollection = shopDB.collection("products");
 
+
+    // my code goes here
 
 
     // Send a ping to confirm a successful connection
