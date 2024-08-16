@@ -45,7 +45,9 @@ async function run() {
         category, 
         maxPrice, 
         minPrice, 
-        searchTxt
+        searchTxt,
+        sortPrice,
+        sortDate
       } = req.query;
 
       const query = {};
@@ -56,7 +58,13 @@ async function run() {
       if (maxPrice && !minPrice) query.price = {$lte: parseInt(maxPrice)};
       if (maxPrice && minPrice) query.price = {$gte: parseInt(minPrice), $lte: parseInt(maxPrice)};
 
-      const result = await productsCollection.find(query).skip(page * size).limit(size).toArray();
+      const options = {}
+      if(sortPrice === "highToLow") options.price = -1
+      if(sortPrice === "lowToHigh") options.price = 1
+      if(sortDate === "newFirst") options.date = -1
+      if(sortDate === "oldFirst") options.date = 1
+
+      const result = await productsCollection.find(query).sort(options).skip(page * size).limit(size).toArray();
       res.send(result);
     })
 
