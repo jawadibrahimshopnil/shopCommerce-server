@@ -30,9 +30,14 @@ async function run() {
     const shopDB = client.db("shopCommerce");
     const productsCollection = shopDB.collection("products");
 
-
     // my code goes here
+    
+    app.get("/productscount", async(req, res)=>{
+      const count = await productsCollection.countDocuments();
+      res.send({count});
+    })
 
+    
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
