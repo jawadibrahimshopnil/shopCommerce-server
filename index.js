@@ -55,6 +55,7 @@ async function run() {
       if (maxPrice && !minPrice) query.price = {$lte: parseInt(maxPrice)};
       if (maxPrice && minPrice) query.price = {$gte: parseInt(minPrice), $lte: parseInt(maxPrice)};
 
+      // sorting the data
       const options = {}
       if(sortPrice === "highToLow") options.price = -1
       if(sortPrice === "lowToHigh") options.price = 1
