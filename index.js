@@ -46,6 +46,7 @@ async function run() {
         sortDate
       } = req.query;
 
+      // setting query for filter data
       const query = {};
       if (brand) query.brand = brand;
       if (category) query.category = category;
