@@ -9,8 +9,8 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json())
 
-const uri = `mongodb://127.0.0.1:27017`;
-// const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.fdrrfs0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+// const uri = `mongodb://127.0.0.1:27017`;
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.fdrrfs0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -62,9 +62,11 @@ async function run() {
       if(sortDate === "newFirst") options.date = -1
       if(sortDate === "oldFirst") options.date = 1
 
+      // getting data from db
       const cursor = productsCollection.find(query).sort(options);
       const count = await productsCollection.countDocuments(query);
       const result = await cursor.skip(page * size).limit(size).toArray();
+
       res.send({result, count});
     })
 
