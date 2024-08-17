@@ -31,8 +31,9 @@ async function run() {
     const productsCollection = shopDB.collection("products");
 
     // my code goes here
-    
+
     app.get("/products", async(req, res)=>{
+      // get data from query
       const page = parseInt(req.query?.page) || 0;
       const size = parseInt(req.query?.size) || 9;
       const { 
