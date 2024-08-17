@@ -32,11 +32,6 @@ async function run() {
 
     // my code goes here
     
-    app.get("/productscount", async(req, res)=>{
-      const count = await productsCollection.countDocuments();
-      res.send({count});
-    })
-
     app.get("/products", async(req, res)=>{
       const page = parseInt(req.query?.page) || 0;
       const size = parseInt(req.query?.size) || 9;
