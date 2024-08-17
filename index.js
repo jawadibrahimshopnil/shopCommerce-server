@@ -64,8 +64,10 @@ async function run() {
       if(sortDate === "newFirst") options.date = -1
       if(sortDate === "oldFirst") options.date = 1
 
-      const result = await productsCollection.find(query).sort(options).skip(page * size).limit(size).toArray();
-      res.send(result);
+      const cursor = productsCollection.find(query).sort(options);
+      const count = await productsCollection.countDocuments(query);
+      const result = await cursor.skip(page * size).limit(size).toArray();
+      res.send({result, count});
     })
 
     // Send a ping to confirm a successful connection
